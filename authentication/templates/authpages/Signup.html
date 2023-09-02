@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetaChat || Create an Account</title>
+    <link rel="stylesheet" href="{%static 'Auth/css/signup.css'%}">
+</head>
+<body>
+    <section class="parent">
+        <div class="abstractwrap">
+            <div class="mainabs">
+                <img src="{% static 'Auth/Assets/images/Vector 4.svg' %}" alt="vector">
+            </div>
+            <div class="secondaryabs">
+                <img src="{% static 'Auth/Assets/images/Vector.svg' %}" alt="" class="ast1">
+                <img src="{% static 'Auth/Assets/images/Vector (1).svg' %}" alt="" class="ast2">
+                <img src="{% static 'Auth/Assets/images/Vector (2).svg' %}" alt="" class="ast3">
+                <img src="{% static 'Auth/Assets/images/Ellipse 7.svg' %}" alt="" class="ast4">
+            </div>
+        </div>
+        <div class="logo">
+            <img src="{% static 'Auth/Assets/images/Logo.svg' %}" alt="logo">
+        </div>
+        <div class="mainbox">
+            <div class="mainhead">
+                <p>Signup</p>
+            </div>
+            <hr>
+            <div class="subject">
+                <div class="sechead">
+                    <p>Create an Account!</p>
+                </div>
+                <form method="POST">
+                <div class="inputs">
+                    {%csrf_token%}
+                    <input type="text" name="username" placeholder="Username">
+                    <input type="email" name="email" placeholder="Email">
+                    <div class="passwordpart">
+                        <input type="password" pattern="[0-9]*" inputmode="numeric" name="password1" placeholder="Create 4-digit PIN">
+                        <input type="password" pattern="[0-9]*" inputmode="numeric" name="password2" placeholder="Re-Enter PIN">
+                    </div>
+                    <p class="errortxt">{{form.errors}}</p>  
+                    <input type="submit" value="Proceed">
+                </div>
+                </form>
+                <a href="/Signin" class="signup">Already have an account?</a>
+            </div>  
+
+        </div>
+    </section>
+   <script>
+    // function isNumeric(event) {
+    //     var keycode= event.which ? event.which : event.keycode
+    //     if ( (keycode >= 48 && keycode <=57) || keycode === 8 || keycode === 9){
+    //         return true
+    //     }
+        
+    // }
+    let err = document.querySelectorAll('.errorlist')[1]
+    list = err.textContent.split('.')
+    let txt = document.querySelector('.errortxt').innerHTML = list[0] + '<br>' + list[1]
+  </script>
+</body>
+</html>

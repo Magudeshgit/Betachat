@@ -1,0 +1,138 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetaChat</title>
+    <link rel="stylesheet" href="{% static 'Chat/Assets/css/main.css'%}">
+</head>
+<body>
+  <section class="parent">
+    <div class="navsec">
+        <div class="logo">
+            <img src="{% static 'Chat/Assets/images/mlogo.svg'%}" class="mlogo">
+            <img src="{% static 'Chat/Assets/images/logo.svg' %}" alt="Logo" class="nlogo">
+            <hr>
+        </div>
+        
+        <div class="nav">
+            <ul>
+                <li class="navitem">
+                    <a href="#">
+                    <img src="{% static 'Chat/Assets/images/home.svg' %}" alt="">
+                    <p class="anctxt home">Home</p>
+                    </a>
+                </li>
+                <li class="navitem">
+                    <a href="/createroom">
+                        <img src="{% static 'Chat/Assets/images/createroom.svg' %}" alt="">
+                        <p class="anctxt">Create Rooms</p>
+                    </a>
+                </li>
+                <li class="navitem">
+                    <a href="/search">
+                        <img src="{% static 'Chat/Assets/images/rooms.svg' %}" alt="">
+                        <p class="anctxt">Search Rooms</p>
+                    </a>
+                </li>
+                <li class="navitem">
+                    <a href="#">
+                        <img src="{% static 'Chat/Assets/images/info.svg'%}" alt="">
+                        <p class="anctxt">About</p>
+                    </a>
+                </li>
+                <li class="navitem">
+                    <a href="#">
+                        <img src="{% static 'Chat/Assets/images/help.svg'%}" alt="">
+                        <p class="anctxt">Help</p>
+                    </a>
+                </li>
+                <li class="navitem">
+                    <a href="/logout">
+                        <img src="{% static 'Chat/Assets/images/logout.svg' %}" alt="">
+                        <p class="anctxt">Logout</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="mainsec">
+        <div class="rooms">
+            <div class="header">
+                <p>Your Rooms</p>
+            </div>
+            <div class="room-wrap">
+                {%if not data%}
+                    <p class="nrf-head">No Rooms Found</p>
+                    <p class="nrf-msg">Try Creating a room or Joining an existing room to see them here.</p>
+                {%else%}
+                {%endif%}
+                {% for room in data%}
+                <div class="roombox rbx">
+                    <div class="roomcont">
+                        <p class="roomname">{{room.group_name}}
+                            <span>
+                                {% if room.group_admin == request.user %}
+                                    Admin
+                                {% else %}
+                                    
+                                {% endif %}
+                            </span>
+                        </p>
+                        <p class="uid">{{room.unique_id}} <img class="copybtn" src="{% static 'Chat/Assets/images/copy.svg' %}"></p>
+                        <p class="desc">{{room.group_description}}</p>   
+                    </div>
+                    <div class="roombtn">
+                        <button class="joinbtn">Join</button>
+                        <button class="delbtn">
+                            {% if room.group_admin == request.user %}
+                                <a href="{%url 'Delete' room.id%}">Delete</a>
+                            {% else %}
+                                <a href="{%url 'Remove' room.id%}">Remove</a>
+                            {% endif %}
+                        </button>
+                    </div>
+                </div>
+                {% endfor %} 
+                
+            </div>
+        </div>
+    </div>
+    <div class="chatbox">
+        <div class="roominfo">
+            <p class="roomhead"></p>
+            <p class="room_id"></p>
+            <p class="room_desc"></p>
+            <hr>
+        </div>
+        <div class="chatwrap">
+            
+        </div>
+        <div class="chatinput">
+            <form class="chatform" method="POST">
+                {%csrf_token%}
+            <div class="chatint">
+                <img src="{% static 'Chat/Assets/images/send.svg' %}" alt="">
+                <input type="text" name="msg" placeholder="Send a Message">
+            </div>
+            </form>
+        </div>
+        <div class="crosswrap">
+            <img src="{% static 'Chat/Assets/images/cross.svg' %}" alt="">
+        </div>
+    </div>
+  </section>
+  <script>
+    username = '{{request.user}}'
+    window.user = username
+    copy = document.querySelector('.copybtn')
+    copy.addEventListener('click',(e)=>{
+        UID = e.target.parentNode.innerHTML.slice(0,11)
+        navigator.clipboard.writeText(UID)
+    })
+    
+  </script>
+  <script src="{% static 'Chat/js/main.js' %}"></script>
+</body>
+</html>

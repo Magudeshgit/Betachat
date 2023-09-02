@@ -1,0 +1,51 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetaChat || Welcome back!</title>
+    <link rel="stylesheet" href="{% static 'Auth/css/signin.css' %}">
+</head>
+<body>
+    <section class="parent">
+        <div class="abstractwrap">
+            <div class="mainabs">
+                <img src="{%static 'Auth/Assets/images/Vector 4.svg'%}" alt="vector">
+            </div>
+            <div class="secondaryabs">
+                <img src="{%static 'Auth/Assets/images/Vector.svg' %}" alt="" class="ast1">
+                <img src="{%static 'Auth/Assets/images/Vector (1).svg' %}" alt="" class="ast2">
+                <img src="{%static 'Auth/Assets/images/Vector (2).svg' %}" alt="" class="ast3">
+                <img src="{%static 'Auth/Assets/images/Ellipse 7.svg' %}" alt="" class="ast4">
+            </div>
+        </div>
+        <div class="logo">
+            <img src="{%static 'Auth/Assets/images/Logo.svg' %}" alt="logo">
+        </div>
+        <div class="mainbox">
+            <div class="mainhead">
+                <p>Login</p>
+            </div>
+            <hr>
+            <div class="subject">
+                <div class="sechead">
+                    <p>Welcome back!</p>
+                </div>
+                <form method="post" class="form">
+                    {%csrf_token%}
+                <div class="inputs">
+                    <input type="text" name="username" placeholder="Username" autocomplete="off">
+                    <input type="password" name="password" placeholder="Enter PIN" autocomplete="off">
+                    <p class="errortxt">{{error}}</p>
+                    <input type="submit" value="Proceed" autocomplete="off">
+                </div>
+                </form>
+                <a href="/Signup" class="signup">Don't have an account?</a>
+            </div>
+
+        </div>
+    </section>
+    <!-- <script src="{%static 'Auth/js/login.js'%}"></script> -->
+</body>
+</html>

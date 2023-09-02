@@ -1,0 +1,99 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetaChat || Search Rooms</title>
+    <link rel="stylesheet" href="{% static 'Chat/Assets/css/search.css' %}">
+</head>
+<body>
+    <section class="parent">
+        <div class="navsec">
+            <div class="logo">
+                <img src="{% static 'Chat/Assets/images/mlogo.svg' %}" class="mlogo">
+                <img src="{% static 'Chat/Assets/images/logo.svg' %}" alt="Logo" class="nlogo">
+                <hr>
+            </div>
+            
+            <div class="nav">
+                <ul>
+                    <li class="navitem">
+                        <a href="/">
+                        <img src="{% static 'Chat/Assets/images/home.svg' %}" alt="">
+                        <p class="anctxt">Home</p>
+                        </a>
+                    </li>
+                    <li class="navitem">
+                        <a href="#">
+                            <img src="{% static 'Chat/Assets/images/rooms.svg' %}" alt="">
+                            <p class="anctxt">Search Rooms</p>
+                        </a>
+                    </li>
+                    <li class="navitem">
+                        <a href="#">
+                            <img src="{% static 'Chat/Assets/images/info.svg' %}" alt="">
+                            <p class="anctxt">About</p>
+                        </a>
+                    </li>
+                    <li class="navitem">
+                        <a href="#">
+                            <img src="{% static 'Chat/Assets/images/help.svg' %}" alt="">
+                            <p class="anctxt">Help</p>
+                        </a>
+                    </li>
+                    <li class="navitem">
+                        <a href="#">
+                            <img src="{% static 'Chat/Assets/images/logout.svg' %}" alt="">
+                            <p class="anctxt">Logout</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mainsec">
+            <div class="mhead">
+                <p>BetaChat</p>
+            </div>
+            <div class="shead">
+                <p>Find Rooms and Connect with your group!</p>
+            </div>
+            <div class="search">
+                <form method="POST">
+                    {%csrf_token%}
+                <div class="searchbox">
+                    <img src="{% static 'Chat/Assets/images/search.svg' %}" alt="">
+                    <input type="text" name="searchquery" placeholder="Enter room id, eg.123-321-213">
+                </div>
+                </form>
+            </div>
+            <div class="content">
+                {%if Data == 'NRF'%}
+                    <p>No Room Found</p>
+                {%else%}
+                {%for room in Data%}
+                <div class="roombox">
+                    <div class="roomcont">
+                        
+                        <p class="roomname">{{room.group_name}}
+                            <span>
+                                {%if room.group_admin == request.user%}
+                                    Admin
+                                {%endif%}
+                            </span>
+                        </p>
+                        <p class="uid">{{room.unique_id}}<img src="{% static 'Chat/Assets/images/copy.svg' %}"></p>
+                        <p class="desc">{{room.group_description}}</p>
+                    </div>
+                    <div class="roombtn">
+                        <a href="{%url 'join' room.id%}"><button>Join</button></a>
+                    </div>
+                </div>
+                {%endfor%}
+                {%endif%}
+            </div>
+        </div>
+    </section>
+</body>
+</html>

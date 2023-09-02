@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetaChat || Create a Room</title>
+    <link rel="stylesheet" href="{%static 'Chat/Assets/css/createroom.css'%}">
+</head>
+<body>
+    <section class="parent">
+        <div class="abstractwrap">
+            <div class="mainabs">
+                <img src="{% static 'Auth/Assets/images/Vector 4.svg' %}" alt="vector">
+            </div>
+            <div class="secondaryabs">
+                <img src="{% static 'Auth/Assets/images/Vector.svg' %}" alt="" class="ast1">
+                <img src="{% static 'Auth/Assets/images/Vector (1).svg' %}" alt="" class="ast2">
+                <img src="{% static 'Auth/Assets/images/Vector (2).svg' %}" alt="" class="ast3">
+                <img src="{% static 'Auth/Assets/images/Ellipse 7.svg' %}" alt="" class="ast4">
+            </div>
+        </div>
+        <div class="logo">
+            <img src="{% static 'Auth/Assets/images/Logo.svg' %}" alt="logo">
+        </div>
+        <div class="mainbox">
+            <div class="mainhead">
+                <p>Create a Room</p>
+            </div>
+            <hr>
+            <div class="subject">
+                <div class="sechead">
+                    <p>Create a Room!</p>
+                </div>
+                <form method="POST">
+                <div class="inputs">
+                    {%csrf_token%}
+                    <input type="text" name="roomname" placeholder="Room Name">
+                    <input type="text" name="description" placeholder="Description (max: 50 characters)">
+                    <div class="passwordpart">
+                        <input type="password" pattern="[0-9]*" inputmode="numeric" name="pin1" placeholder="Create 4-digit PIN">
+                        <input type="password" pattern="[0-9]*" inputmode="numeric" name="pin2" placeholder="Re-Enter PIN">
+                    </div>
+                    <p class="errortxt">{{form.errors}}</p>  
+                    <input type="submit" value="Proceed">
+                </div>
+                </form>
+            </div>  
+
+        </div>
+    </section>
+   <script>
+    let err = document.querySelectorAll('.errorlist')[1]
+    list = err.textContent.split('.')
+    let txt = document.querySelector('.errortxt').innerHTML = list[0] + '<br>' + list[1]
+  </script>
+</body>
+</html>

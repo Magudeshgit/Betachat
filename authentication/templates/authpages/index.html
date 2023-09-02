@@ -1,0 +1,123 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetaChat || Homepage</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Judson&family=Krona+One&family=Montez&family=Notable&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{%static 'Auth/css/main.css'%}">
+</head>
+<body>
+    <div class="parent">
+        <section class="sec1">
+            <div class="navsec">
+                <div class="logo">
+                    <img src="{%static 'Auth/Assets/images/Logo.svg'%}" alt="logo">
+                </div>
+                <div class="signbtns">
+                    <a href="/Signup"><button class="sb1">Signup</button></a>
+                    <a href="/Signin"><button class="sb2">Login</button></a>
+                </div>
+            </div>
+            <div class="mainsec">
+                <div class="curve">
+                    <img class="cur" src="{%static 'Auth/Assets/images/curve.svg'%}" alt="#">
+                    <img class="cmob" src="{%static 'Auth/Assets/images/curve.svg'%}" alt="#">
+                </div>
+                <div class="mainl">
+                    <div class="header">
+                        <p class="logohead">BetaChat</p>
+                        <p class="sechead">Connecting Worlds,
+                            with texts.</p>
+                        <p class="terthead">In a private and secure way.</p>
+                        <a href="/Signup"><button>Signup Now!</button></a>    
+                    </div>
+                    <div class="herosaly">
+                        <img src="{%static 'Auth/Assets/images/hero.svg'%}" alt="#">
+                    </div>
+                </div>
+                
+                
+
+                
+            </div>
+        </section>
+        <section class="sec2">
+            <div class="features">
+                <div class="headerfeat">
+                    <p>Features</p>
+                </div>
+                <div class="features">
+                    <div class="feat1">
+                        <div class="featicon">
+                            <img src="{%static 'Auth/Assets/images/feat1.svg'%}" alt="" style="display: flex;">
+                        </div>
+                        <div class="featdesc">
+                            <p>Private and Reliable Chat rooms, to connect with your friends.</p>
+                        </div>
+                    </div>
+
+                    <div class="feat2">
+                        <div class="featicon">
+                            <img src="{%static 'Auth/Assets/images/feat2.svg'%}" alt="">
+                        </div>
+                        <div class="featdesc">
+                            <p>Fully-fledged PIN Authentication  throughout the site.</p>
+                        </div>
+                    </div>
+
+                    <div class="feat3">
+                        <div class="featicon">
+                            <img src="{%static 'Auth/Assets/images/feat3.svg'%}" alt="">
+                        </div>
+                        <div class="featdesc">
+                            <p>End-to-End encrypted messages made with 64-bit SLS encryption.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="abstract">
+                <img src="{%static 'Auth/Assets/images/feat.svg'%}" alt="">
+            </div>
+        </section>
+        <section class="sec3">
+            <div class="secleft">
+                <div class="secmainhead">
+                    <p>We would Love to hear a 
+                        feedback from you!</p>
+                </div>
+                <div class="secctinfo">
+                    <form action="#" method="POST">
+                        <p>Your Name</p>
+                        <input type="text">
+                        <p>Your Email</p>
+                        <input type="text">
+                        <p>Feedback</p>
+                        <textarea></textarea>
+
+                        <input type="submit" placeholder="Send" class="btnsub">
+                    </form>
+                </div>
+            </div>
+            <div class="secright">
+                <img src="{%static 'Auth/Assets/images/ctimg.svg'%}" alt="">
+            </div>
+        </section>
+        <section class="sec4">
+            <div class="header fhead">
+                <p class="logohead">BetaChat</p>
+                <p class="sechead mob-sechead">Connecting Worlds,
+                    with texts.</p>
+                <p class="terthead">In a private and secure way.</p>
+                <a href="/Signup"><button>Signup Now!</button></a>    
+            </div>
+            <p class="dev">From the House of MGCloud</p>
+
+        </section>
+    </div>
+</body>
+</html>
