@@ -1,0 +1,50 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Judson&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{%static 'Chat/Assets/css/profile.css'%}">
+</head>
+<body>
+    <div class="parent">
+    {%include 'pages/NavBar.html'%}
+        <div class="rightside">
+        <div class="heading">
+            <p>Profile</p>
+        </div>
+        <div class="profilepicdiv">
+            <div class="profilepic">
+                <img src="{% static 'Chat/Assets/images/profile.jpeg' %}" alt="profile">
+            </div>
+        </div>
+        <form method="POST">
+            {%csrf_token%}
+            <label for="pruser">Username</label>
+            <input type="text" class="pruser" id="pruser" readonly>
+            <label for="prnote">Note</label>
+            <input type="text" name="note" class="prnote" id="prnote">
+            <label for="premail" id="premail">Email</label>
+            <input type="text" name="email" class="premail" id="premail">
+            <input type="submit">
+        </form>
+        </div>
+    </div>
+    <script>
+        let pruser = document.querySelector('.pruser')
+        let prnote = document.querySelector('.prnote')
+        let premail = document.querySelector('.premail')
+        uname = "{{request.user}}"
+        note = "{{request.user.Note}}"
+        mail = "{{request.user.email}}"
+        
+        pruser.value=uname
+        prnote.value=note
+        premail.value=mail   
+    </script>
+</body>
+</html>

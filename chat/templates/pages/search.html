@@ -6,9 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BetaChat || Search Rooms</title>
     <link rel="stylesheet" href="{% static 'Chat/Assets/css/search.css' %}">
+    <link rel="stylesheet" href="{% static 'Chat/Assets/css/main.css' %}">
+    <style>
+        .imagewrap {
+        background: url("{%static 'Chat/Assets/images/profile.jpeg'%}");
+        background-size: cover;
+        background-position: center;
+        border-radius:50% 50% 50% 50%;
+        width:40px;
+        height:40px;
+    }
+    </style>
 </head>
 <body>
     <section class="parent">
+        <div class="profilediv">
+            <div class="imagewrap">
+                
+            </div>
+            <div class="prcont">
+                <p class="info">Logged in as</p>
+                <p class="User">{{request.user}}</p>
+            </div>
+        </div>
         <div class="navsec">
             <div class="logo">
                 <img src="{% static 'Chat/Assets/images/mlogo.svg' %}" class="mlogo">

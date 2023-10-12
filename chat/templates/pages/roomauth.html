@@ -6,9 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Authentication</title>
     <link rel="stylesheet" href="{% static 'Chat/Assets/css/roomauth.css' %}">
+    <link rel="stylesheet" href="{% static 'Chat/Assets/css/main.css' %}">
+    <style>
+        .imagewrap {
+        background: url("{%static 'Chat/Assets/images/profile.jpeg'%}");
+        background-size: cover;
+        background-position: center;
+        border-radius:50% 50% 50% 50%;
+        width:40px;
+        height:40px;
+    }
+    </style>
 </head>
+
 <body>
     <section class="parent">
+        <div class="profilediv">
+            <div class="imagewrap">
+                
+            </div>
+            <div class="prcont">
+                <p class="info">Logged in as</p>
+                <p class="User">{{request.user}}</p>
+            </div>
+        </div>
         <div class="abstractwrap">
             <div class="mainabs">
                 <img src="{%static 'Auth/Assets/images/Vector 4.svg'%}" alt="vector">
@@ -35,8 +56,8 @@
                 <form method="post" class="form">
                     {%csrf_token%}
                 <div class="inputs">
-                    <input type="text" name="roomname" placeholder="Room Name" autocomplete="off">
-                    <input type="password" name="roompin" placeholder="Room PIN" autocomplete="off">
+                    <p class="roomname">Room Name.: {{roomname}}</p>
+                    <input type="password" name="roompin" placeholder="Enter Room PIN" autocomplete="off">
                     <p class="errortxt">{{error}}</p>
                     <input type="submit" value="Proceed" autocomplete="off">
                 </div>
@@ -45,6 +66,5 @@
 
         </div>
     </section>
-    <!-- <script src="{%static 'Auth/js/login.js'%}"></script> -->
 </body>
 </html>

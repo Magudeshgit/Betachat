@@ -1,0 +1,48 @@
+{%load static%}
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'Chat/Assets/css/main.css'%}">
+    </head>
+<div class="navsec">
+    <div class="logo">
+        <img src="{% static 'Chat/Assets/images/mlogo.svg'%}" class="mlogo">
+        <img src="{% static 'Chat/Assets/images/logo.svg' %}" alt="Logo" class="nlogo">
+        <hr>
+    </div>
+    
+    <div class="nav">
+        <ul>
+            <li class="navitem">
+                <a href="/" class="home">
+                <img src="{% static 'Chat/Assets/images/home.svg' %}" alt="">
+                <p class="anctxt">Home</p>
+                </a>
+            </li>
+            <li class="navitem">
+                <a href="/createroom" class="crm">
+                    <img src="{% static 'Chat/Assets/images/createroom.svg' %}" alt="">
+                    <p class="anctxt">Create Rooms</p>
+                </a>
+            </li>
+            <li class="navitem">
+                <a href="/search" class="srm">
+                    <img src="{% static 'Chat/Assets/images/rooms.svg' %}" alt="">
+                    <p class="anctxt">Search Rooms</p>
+                </a>
+            </li>
+            <li class="navitem" class="abt">
+                <a href="#">
+                    <img src="{% static 'Chat/Assets/images/info.svg'%}" alt="">
+                    <p class="anctxt">About</p>
+                </a>
+            </li>
+            <li class="navitem">
+                <a href="/logout">
+                    <img src="{% static 'Chat/Assets/images/logout.svg' %}" alt="">
+                    <p class="anctxt">Logout</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+</html>

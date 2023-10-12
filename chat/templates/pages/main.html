@@ -6,58 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BetaChat</title>
     <link rel="stylesheet" href="{% static 'Chat/Assets/css/main.css'%}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Judson&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.css" integrity="sha512-NXUhxhkDgZYOMjaIgd89zF2w51Mub53Ru3zCNp5LTlEzMbNNAjTjDbpURYGS5Mop2cU4b7re1nOIucsVlrx9fA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'Chat/Assets/css/main.css'%}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js" integrity="sha512-lOrm9FgT1LKOJRUXF3tp6QaMorJftUjowOWiDcG5GFZ/q7ukof19V0HKx/GWzXCdt9zYju3/KhBNdCLzK8b90Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <style>
+        .imagewrap {
+        background: url("{%static 'Chat/Assets/images/profile.jpeg'%}");
+        background-size: cover;
+        background-position: center;
+        border-radius:50% 50% 50% 50%;
+        width:100px;
+        height:100px;
+    }
+    </style>
 </head>
+
 <body>
   <section class="parent">
-    <div class="navsec">
-        <div class="logo">
-            <img src="{% static 'Chat/Assets/images/mlogo.svg'%}" class="mlogo">
-            <img src="{% static 'Chat/Assets/images/logo.svg' %}" alt="Logo" class="nlogo">
-            <hr>
-        </div>
-        
-        <div class="nav">
-            <ul>
-                <li class="navitem">
-                    <a href="#">
-                    <img src="{% static 'Chat/Assets/images/home.svg' %}" alt="">
-                    <p class="anctxt home">Home</p>
-                    </a>
-                </li>
-                <li class="navitem">
-                    <a href="/createroom">
-                        <img src="{% static 'Chat/Assets/images/createroom.svg' %}" alt="">
-                        <p class="anctxt">Create Rooms</p>
-                    </a>
-                </li>
-                <li class="navitem">
-                    <a href="/search">
-                        <img src="{% static 'Chat/Assets/images/rooms.svg' %}" alt="">
-                        <p class="anctxt">Search Rooms</p>
-                    </a>
-                </li>
-                <li class="navitem">
-                    <a href="#">
-                        <img src="{% static 'Chat/Assets/images/info.svg'%}" alt="">
-                        <p class="anctxt">About</p>
-                    </a>
-                </li>
-                <li class="navitem">
-                    <a href="#">
-                        <img src="{% static 'Chat/Assets/images/help.svg'%}" alt="">
-                        <p class="anctxt">Help</p>
-                    </a>
-                </li>
-                <li class="navitem">
-                    <a href="/logout">
-                        <img src="{% static 'Chat/Assets/images/logout.svg' %}" alt="">
-                        <p class="anctxt">Logout</p>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
+    {% include 'pages/NavBar.html' %}
+   
     <div class="mainsec">
+        <a href="{%url 'profile'%}">
+        <div class="profilediv">
+            <div class="imagewrap">
+                
+            </div>
+            <div class="prcont">
+                <p class="info">Logged in as</p>
+                <p class="User">{{request.user}}</p>
+            </div>
+        </div>
+        </a>
         <div class="rooms">
             <div class="header">
                 <p>Your Rooms</p>
@@ -72,20 +57,25 @@
                 <div class="roombox rbx">
                     <div class="roomcont">
                         <p class="roomname">{{room.group_name}}
-                            <span>
-                                {% if room.group_admin == request.user %}
-                                    Admin
-                                {% else %}
-                                    
-                                {% endif %}
-                            </span>
+                            
                         </p>
                         <p class="uid">{{room.unique_id}} <img class="copybtn" src="{% static 'Chat/Assets/images/copy.svg' %}"></p>
                         <p class="desc">{{room.group_description}}</p>   
+                        <p class="roomkeyword" style="display: none;">{{room.keyword}}</p>
+                        <span class="admclass">
+                            {% if room.group_admin == request.user %}
+                                Admin
+                            {% else %}
+                                
+                            {% endif %}
+                        </span>
                     </div>
                     <div class="roombtn">
                         <button class="joinbtn">Join</button>
+                        {% if room.group_admin == request.user %}
+                        <button class="joinbtn" ><a href="{%url 'configure' room.id%}" style="text-decoration: none; font-size: .9em; width: 100%;">Configure</a></button>            
                         <button class="delbtn">
+                        {%endif%}
                             {% if room.group_admin == request.user %}
                                 <a href="{%url 'Delete' room.id%}">Delete</a>
                             {% else %}
@@ -123,16 +113,81 @@
         </div>
     </div>
   </section>
+  <script src="{% static 'Chat/js/main.js' %}"></script>
   <script>
-    username = '{{request.user}}'
-    window.user = username
+     window.onload = ()=>{
+        
+        
+        let navitem = document.querySelector('.home')
+        navitem.style.textDecoration = 'underline'
+    }
+
+    window.username = '{{request.user}}'
     copy = document.querySelector('.copybtn')
     copy.addEventListener('click',(e)=>{
         UID = e.target.parentNode.innerHTML.slice(0,11)
         navigator.clipboard.writeText(UID)
+        const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+            icon: 'success',
+            title: 'Copied to clipboard!'
+            })
     })
+    function Profanity_Filter(msg){
+        STATE=false
+        keywordArray = JSON.parse(keyword)
+        for (let i=0; i<keywordArray.length; i++) {
+            const element = keywordArray[i];
+            if (msg.includes(element))
+            {
+                console.log(msg.includes(element))
+                STATE=true
+            }
+        }
+        if (STATE)
+        {
+            Swal.fire({
+            title: 'Warning!',
+            html:
+                    '<bold>"'+msg+'"</bold> Your group prohibits the use of specific words',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+            })
+            return STATE
+        }
+        else
+        {
+            return STATE
+        }
+    }
+    function SendProtocol(e) {
+    e.preventDefault()
+    message = e.target.msg.value
+    console.log(window.user)
+    if (Profanity_Filter(message)===false)
+    {
+        encrypted_message=AES_Encryptor(message)
+        WSINS.send(JSON.stringify(
+        {
+            'USER' : username,
+            'MESSAGE' : encrypted_message
+        }
+    ))
+    }
     
+    FORM.reset()
+}
   </script>
-  <script src="{% static 'Chat/js/main.js' %}"></script>
 </body>
 </html>

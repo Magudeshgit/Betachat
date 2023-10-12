@@ -52,7 +52,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         global data
         data=json.loads(text_data)
-        print('raw', text_data)
+        print
+        print('UserMessage:\n', text_data)
         print('grp: ', self.room_group_name)
         await self.send_to_group(self.room_group_name, data['MESSAGE'])
         

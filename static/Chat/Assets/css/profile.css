@@ -1,0 +1,120 @@
+body
+{
+    background-color: #323232;
+}
+.rightside
+{
+    width: 100%;
+    min-height: 100vh;
+}
+.heading>p
+{
+    font-family: 'Monteserrat_Sbold';
+    font-size: 4em;
+    margin: .5em 0 0 1em;
+    text-decoration: underline;
+}
+.profilepicdiv
+{
+    margin-top: 2em;
+}
+form
+{
+    display: inline-flex;
+    flex-direction: column;
+    margin-left: 2em;
+    padding: 1em;
+}
+label
+{
+    margin-top: 1em;
+    font-family: 'Monteserrat_Reg';
+    font-size: 1.6em;
+}
+form>input
+{
+    background-color: transparent;
+    outline: none;
+    border: 1px solid #fff;
+    display: inline-block;
+    width: 100%;
+    font-size: 2em;
+    font-family: 'Monteserrat_Med';
+    position: relative;
+    padding: .5em;
+    border-radius: 5px;
+}
+form>input[type="submit"]
+{
+    margin-top: .3em;
+    transition: 0.5s;
+    cursor: pointer;
+}
+form>input[type="submit"]:hover
+{
+    background: #191919;
+    color: white;
+}
+.pruser::before
+{
+    content: 'Username';
+    position: absolute;
+    width: 1000px;
+    height: 100px;
+    display: flex;
+    top: 10px;
+    left: 20px;
+    color: red;
+    background: blue;
+    
+
+
+}
+.profilepic
+{
+    width: 20em;
+    height: 20em;
+    background-color: black;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 2em;
+    position: relative;
+    transition: 0.5s;
+}
+.profilepic:hover::after
+{
+    content: '';
+    width: 20em;
+    height: 20em;
+    background: #121212;
+    opacity: 0.8;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    transform: 0.5s;
+    transition: 0.5s;
+}
+.profilepic>img
+{
+    width: 100%;
+    border-radius: 100px;
+}
+.userabt
+{
+    margin-left: 2em;
+    margin-top: 2em;
+}
+.username>p
+{
+    font-family: 'Judson', serif;
+    font-size: 40px;
+    margin-left: 1em;
+}
+.userabt>p
+{
+    font-family: 'Judson', serif;
+    font-size: 25px;
+}

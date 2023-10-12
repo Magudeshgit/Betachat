@@ -15,7 +15,6 @@ const chat_room = document.querySelector('.roomname')
 const beta_room = document.querySelector('.roomhead')
 const beta_desc = document.querySelector('.room_desc')
 
-
 joinbtn.forEach((i)=>{
     i.addEventListener('click', joinfunc)
 })
@@ -26,6 +25,8 @@ function joinfunc(e)
     const UID = e.target.parentNode.parentNode.childNodes[1].childNodes[3].innerHTML.slice(0,11)
     const descrip = e.target.parentNode.parentNode.childNodes[1].childNodes[5].innerHTML
     const room_name = e.target.parentNode.parentNode.childNodes[1].childNodes[1].innerHTML
+    window.keyword = e.target.parentNode.parentNode.childNodes[1].childNodes[7].innerHTML
+    window.room_key=e.target.parentNode.parentNode.childNodes[1].childNodes[1].innerText
     room_id.innerHTML = UID
     beta_room.innerHTML = room_name
     beta_desc.innerHTML = descrip
@@ -45,22 +46,19 @@ function joinfunc(e)
     WSINS.onmessage = ReceiveProtocol   
 }
 
-function SendProtocol(e) {
-    e.preventDefault()
-    message = e.target.msg.value
-    console.log(message)
-    WSINS.send(JSON.stringify(
-        {
-            'USER' : window.user,
-            'MESSAGE' : message
-        }
-    ))
-    FORM.reset()
-}
 
+function AES_Encryptor(message) {
+    let encrypted = CryptoJS.AES.encrypt(message, room_key);
+    return encrypted.toString()
+}
+function AES_Decryptor(message) {
+    console.log(room_key)
+    let decrypted = CryptoJS.AES.decrypt(message, room_key);
+    return decrypted.toString(CryptoJS.enc.Utf8)
+}
 function ReceiveProtocol(e) {
     data = JSON.parse(e.data)
-    console.log(data)
+    //console.log(data)
     if (data.status != '102')
     {
         actualchat = document.createElement("div")
@@ -76,7 +74,7 @@ function ReceiveProtocol(e) {
         actualchat.appendChild(msgdom)
 
         userdom.innerHTML = data.username
-        msgdom.innerHTML = data.message
+        msgdom.innerHTML = AES_Decryptor(data.message)
 
         let objDiv = document.querySelector(".chatwrap");
         objDiv.scrollTop = objDiv.scrollHeight;

@@ -20,5 +20,9 @@ urlpatterns = [
     path('join/<int:roomid>', chat.JoinRoom, name='join'),
     path('remove/<int:roomid>', chat.RemoveRoom, name='Remove'),
     path('delete/<int:roomid>', chat.DeleteRoom, name='Delete'),
+    path('profile/', chat.Profile, name='profile'),
+    path('configure/<int:roomid>', chat.Group_config, name='configure'),
+    path('remove_user/<int:roomid>', chat.Remove_User, name='remove_user'),
+    path('remove_keyword/<str:rm_keyword>/<int:roomid>', chat.Remove_Keyword, name='remove_keyword'),
 
 ]

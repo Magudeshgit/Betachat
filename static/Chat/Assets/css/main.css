@@ -35,8 +35,49 @@ html
     background-color: #323232;
     width: 100%;
     display: flex;
-    overflow-y: scroll;
+    overflow-x: hidden;
     height: 100vh;
+    position: relative;
+}
+.profilediv
+{
+    width: 180px;
+    height: 50px;
+    background-color: #1E1E1E;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    border-radius: 100px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1em;
+    box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, .25);  
+
+}
+.prcont
+{
+    margin-left: 1em;
+}
+.info
+{
+    font-family: 'Monteserrat_Reg';
+    font-size: 10px;
+}
+.User
+{
+    font-family: 'Judson', serif;
+    font-size: 1.6em;
+}
+.imagewrap
+{
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+}
+.imagewrap>img
+{
+    max-width: 100%;
 }
 .navsec
 {
@@ -98,6 +139,7 @@ html
     width: 100%;
     /* min-height: 100vh;   */
     display: flex;
+    position: relative;
 
 }
 .nrf-head
@@ -144,10 +186,10 @@ html
     color: white;
     
 }
-.roomname>span
+.admclass
 {
-    margin-left: 5px;
     opacity: 0.5;
+    font-family: 'Monteserrat_Lig';
 }
 .uid, .desc
 {
@@ -188,8 +230,12 @@ html
 }
 .uid>img
 {
-    cursor: 'pointer';
-    width: 10%;
+    cursor: pointer;
+    width: 5%;
+}
+.roomcont
+{
+    width: 50%;
 }
 .room-wrap
 {
@@ -306,6 +352,31 @@ html
     display: flex;
     flex-direction: column;
     gap: 1em;
+}
+.swal2-title
+{
+    font-family: 'Monteserrat_Sbold';
+    font-size: 2em;
+}
+.swal2-html-container
+{
+    font-family: 'Monteserrat_Reg';
+    font-size: 2em;
+}
+.swal2-html-container>bold
+{
+    font-family: 'Monteserrat_Reg';
+    color: black;
+    font-weight: bold;
+}
+.swal2-title
+{
+    font-size: 4em;
+}
+.swal2-styled
+{
+    font-size: 1.6em;
+    font-family: 'Monteserrat_Reg';
 }
 @media (max-width: 840px)
 {

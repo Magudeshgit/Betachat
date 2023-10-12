@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Count
+from authentication.models import BetaUser
 from .models import ChatBase
 import random
+import json
 
-# Create your views here.
+jsonDecode=json.decoder.JSONDecoder()
 
 @login_required(login_url='Home/')
 def Home(request):
@@ -13,7 +16,7 @@ def Home(request):
     except ObjectDoesNotExist:
         data=None
 
-    print(data)
+    #print(data)
     return render(request, 'pages/main.html',{'data': data})
 
 @login_required(login_url='Home/')
@@ -31,9 +34,10 @@ def Searchops(request):
 def JoinRoom(request, roomid):
     room = ChatBase.objects.get(id=roomid)
     if request.method ==  'POST':
-        roomname = request.POST.get('roomname')
+        #roomname = request.POST.get('roomname')
+        roomname=room.group_name
         roompin = request.POST.get('roompin')
-        if room.group_name == roomname and room.group_PIN == roompin:
+        if room.group_PIN == roompin:
             room.Users.add(request.user)
             return redirect('/')
         else:
@@ -81,3 +85,59 @@ def RemoveRoom(request, roomid):
 def DeleteRoom(request, roomid):
     item = ChatBase.objects.get(id=roomid).delete()
     return redirect('/')
+def Profile(request):
+    print(request.user.profile.path)
+    userData=[]
+    userData.append(request.user.email)
+    userData.append(request.user.Note)
+    if request.method=='POST':
+        formData=[]
+        note=formData.append(request.POST.get('note'))
+        email=formData.append(request.POST.get('email'))
+        if userData!=formData:
+            userObject = BetaUser.objects.filter(username=request.user)
+            userObject.update(Note=request.POST.get('note'))
+            userObject.update(email=request.POST.get('email'))
+            
+            return render(request,'pages/profile.html')
+    else:
+        return render(request,'pages/profile.html')
+def Group_config(request,roomid):
+    keywords = ChatBase.objects.get(id=roomid)
+    lop = keywords.keyword
+    if lop!='':
+        keywordList=jsonDecode.decode(lop)
+    else:
+        keywordList=[]
+
+    try: 
+        data=ChatBase.objects.get(id=roomid)
+        print(data)
+        count = ChatBase.objects.annotate(Count('Users'))
+        count = count[0].Users__count
+    except ObjectDoesNotExist:
+        data=None
+    if request.method=='POST':
+        keyword = request.POST.get('keyword')
+        if keyword=="":
+            pass
+        else:       
+            keywordList.append(keyword)
+            data.keyword = json.dumps(keywordList)
+            data.save()
+            return render(request,'pages/configure.html', {'data':data, 'count':count,'rmusr':data.Users.all(),'keywords': keywordList, 'key1': json.dumps(keywordList)})
+    else:
+        return render(request,'pages/configure.html', {'data':data, 'count':count,'rmusr':data.Users.all(),'keywords': keywordList, 'key1': json.dumps(keywordList)})
+def Remove_User(request,roomid):
+    chat = ChatBase.objects.get(id=roomid)
+    chat.Users.remove(request.user.id)
+    return render(request,'pages/configure.html')
+def Remove_Keyword(request,rm_keyword,roomid):
+    count = ChatBase.objects.annotate(Count('Users'))
+    count = count[0].Users__count
+    data = ChatBase.objects.get(id=roomid)
+    keywordList = jsonDecode.decode(data.keyword)
+    keywordList.remove(rm_keyword)
+    data.keyword = json.dumps(keywordList)
+    data.save()
+    return render(request,'pages/configure.html', {'data':data, 'count':count,'rmusr':data.Users.all(), 'keywords':keywordList})

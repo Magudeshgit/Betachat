@@ -36,4 +36,4 @@ def Signup(request):
     
 def Logout(request):
     logout(request)
-    return redirect('Home/')
+    return redirect('/')

@@ -1,0 +1,78 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configue Room</title>
+    <link rel="stylesheet" href="{%static 'Chat/Assets/css/configure.css'%}">
+</head>
+<body>
+    <div class="parent">
+        {%include 'pages/NavBar.html'%}
+            <div class="rightside">
+                <div class="heading">
+                    <p>Configure Room</p>
+                </div>
+                <div class="roomheader">
+                    <p class="rname">{{data.group_name}}</p>
+                    <p class="countppl">{{count}} people are around</p>
+                </div>
+                <div class="userwrapbox">
+                <div class="userwrap">
+                    {%for Users in rmusr%}
+                    <div class="usertab">
+                        <p>{{Users}}</p>
+                    </div>
+                    <a href="{%url 'remove_user' data.id%}">
+                    <div class="rmwrap">
+                        <img src="{%static 'Chat/Assets/images/rm.svg'%}" alt="remove">
+                    </div>
+                    </a>
+                    {%endfor%}
+                </div>
+                </div>
+                <div class="roomheader">
+                    <p class="rname2">Profanity Filter</p>
+                    <p class="countppl2 ">Add Keywords that are prohibited in this group</p>
+                    <form method="POST">
+                        {%csrf_token%}
+                        <label for="keyword">Keywords:</label>
+                        <div class="intwrap">
+                        <input type="text" id="keyword" name="keyword">
+                        <input type="submit" value="Add">
+                        </div>
+                    </form>
+                    <div class="keywordwrap">
+                        {%for i in keywords%}
+                        <div class="keyword">
+                            <div class="overlay">
+                                {%if keywords%}
+                                <a href="{%url 'remove_keyword' i data.id%}">Remove</a>
+                                {%endif%}
+                            </div>
+                            <p>{{i}}</p>
+                        </div>
+                        {%endfor%}
+                       
+                    </div>
+                </div>
+            </div>
+    </div>
+<script>
+    overlay = document.querySelectorAll('.overlay')
+    keyword = document.querySelectorAll('.keyword')
+    keyword.forEach((i) => {
+        i.addEventListener('mouseover', ()=>{
+            i.childNodes[1].style.display ="flex" 
+    })});
+    keyword.forEach((i) => {
+        i.addEventListener('mouseout', ()=>{
+            i.childNodes[1].style.display = "none"
+    })    
+    });
+
+    
+</script>
+</body>
+</html>

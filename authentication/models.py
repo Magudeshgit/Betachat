@@ -22,6 +22,8 @@ class BaseUser(BaseUserManager):
 
 
 class BetaUser(AbstractBaseUser, PermissionsMixin):
+    profile=models.ImageField(upload_to='profile/',default='profile/default.svg')
+    Note=models.CharField(max_length=50,blank=True)
     username = models.CharField(max_length=50, unique=True)
     email = models.EmailField(verbose_name='Email', max_length=255)
     is_staff=models.BooleanField(default=False)
