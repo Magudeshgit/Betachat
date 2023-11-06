@@ -1,0 +1,205 @@
+@import url(fonts.css);
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 10px
+}
+
+.parent
+{
+    width: 100%;
+    min-height: 100vh;
+    background: #2f2f2f;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+}
+.abstractwrap
+{
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.mainabs
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+    max-width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.mainabs > img
+{
+    opacity: 0.05;
+    width: 90%;
+
+}
+.secondaryabs
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+}
+.ast1
+{
+    position: absolute;
+    top: 10%;
+    left: 10%;
+}
+.ast2
+{
+    position: absolute;
+    top: 40%;
+    left: 20%;
+}
+.ast3
+{
+    position: absolute;
+    top: 20%;
+    left: 30%;
+}
+.ast4
+{
+    position: absolute;
+    left: 13%;
+    top: 70%;
+    opacity: 0.05;
+}
+.logo
+{
+    margin-bottom: 20px;
+    z-index: 1;
+}
+.mainbox
+{
+    width: 500px;
+    min-height: 300px;
+    background-color: #323232;
+    border-radius: 20px;
+    z-index: 1;
+    box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+
+}
+.mainbox>hr
+{
+    width: 90%;
+    opacity: 0.2;
+}
+.mainhead
+{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 5px 0 9px 0;
+}
+.mainhead > p
+{
+    font-family: 'Monteserrat_Sbold';
+    font-size: 2.5em;
+    color: white;
+}
+.subject, .inputs
+{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.sechead
+{
+    margin: 15px 0 15px 0;
+}
+.sechead>p
+{
+    font-family: 'Monteserrat_Sbold';
+    font-size: 2em;
+    color: white;
+    text-align: center;
+    text-decoration: underline;
+}
+.inputs
+{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.inputs > input
+{
+    width: 80%;
+    margin: 5px;
+    outline: none;
+    border: none;
+    background: #3d3d3d;
+    padding: 13px;
+    border-radius: 5px;
+    color: white;
+    font-family: 'Monteserrat_Med';
+    font-size: 1.7em;
+}
+::placeholder
+{
+    color: white;
+    font-family: 'Monteserrat_Reg';
+    opacity: 0.5;
+}
+.errortxt
+{
+    font-size: 12px;
+    font-family: 'Monteserrat_Reg';
+    color: red;
+}
+input[type='submit']
+{
+    width: 40%;
+    background: #292929;
+    color: white;
+    font-size: 1.6em;
+    font-family: 'Monteserrat_Med';
+    margin-top: 15px;
+    transition: 0.5s;
+    cursor: pointer;
+}
+input[type='submit']:hover
+{
+    background-color: #212121;
+
+}
+.signup
+{
+    color: white;
+    font-family: 'Monteserrat_Reg';
+    text-align: center;
+    font-size: 1.5em;
+    letter-spacing: 0.5px;
+    margin-top: 10px;
+}
+@media (max-width: 550px) {
+    .mainbox
+    {
+        max-width: 300px;
+    }
+    .ast2
+    {
+        top: 40%;
+        left: 10%;
+    }
+    .ast3
+    {
+        top: 50%;
+        left: 90%;
+    }
+}

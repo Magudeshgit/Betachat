@@ -1,0 +1,151 @@
+.rightside
+{
+    width: 100%;
+    min-height: 100vh;
+}
+.heading>p
+{
+    font-family: 'Monteserrat_Sbold';
+    font-size: 3.8em;
+    margin: .5em 0 0 1em;
+    text-decoration: underline;
+}
+.roomheader
+{
+    display: flex;
+    flex-direction: column;
+    margin-top: 3.5em;
+    margin-left: 3.5em;
+}
+.rname
+{
+    font-size: 2.8em;
+    font-family: 'Monteserrat_Sbold';
+}
+.countppl
+{
+    font-size: 2em;
+    font-family: 'Monteserrat_Med';
+}
+.userwrap
+{
+    width: 420px;
+    height: 50px;
+    background-color: #242424;
+    margin-top: 1em;
+    margin-left: 3.5em;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 2em;
+    align-items: center;
+}
+.usertab>p
+{
+    font-family: 'Monteserrat_Reg';
+    font-size: 2em;
+}
+.rmwrap
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(50, 50, 50, 0.58);
+    width: 20%;
+    height: 100%;
+    cursor: pointer;
+
+}
+.rmwrap>img
+{
+    z-index: 5;
+}  
+.countppl2
+{
+    font-size: 1.6em;
+    font-family: 'Monteserrat_Reg';
+} 
+.rname2
+{
+    font-size: 2.8em;
+    font-family: 'Monteserrat_Sbold';
+    text-decoration: underline;
+}
+form
+{
+    margin-top: 2em;
+}
+label
+{
+    font-size: 1.6em;
+    font-family: 'Monteserrat_Med';
+}
+input[type="text"]
+{
+    background-color: #3D3D3D;
+    border: none;
+    outline: none;
+    font-family: 'Monteserrat_Reg';
+    font-size: 1.6em;
+    padding: .6em;
+    margin: 0;
+}
+input[type="submit"]
+{
+    background-color: rgba(70, 66, 74, 1);
+    border: none;
+    outline: none;
+    font-family: 'Monteserrat_Reg';
+    font-size: 1.6em;
+    padding: .6em;
+    cursor: pointer;
+}
+.keywordwrap
+{
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 50%;
+}
+.keyword
+{
+    padding: 1em;
+    background: rgba(36, 36, 36, 1);
+    margin: .7em;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;  
+    transition: 1s; 
+}
+.overlay
+{
+    background: #b81111;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 15px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    transition: 1s;
+    padding: 1em;
+}
+.overlay>a
+{
+    font-family: 'Monteserrat_Lig';
+    font-size: 1em;
+    text-decoration: none;
+}
+.keyword>p
+{
+    font-family: 'Monteserrat_Reg';
+    font-size: 1.2em;
+}
+.userwrapbox
+{
+    display: flex;
+    flex-direction: column;
+}
