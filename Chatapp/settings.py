@@ -12,23 +12,15 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-96ck8zw^h8^5-li27g6blt13(7(#8oa9eyef3csh=%lww7@lgw'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['172.31.28.199','betachatenv.eba-dpqr9fte.ap-south-1.elasticbeanstalk.com', '127.0.0.1']
 
-
-# Application definition
 
 INSTALLED_APPS = [
     'daphne',
@@ -41,6 +33,8 @@ INSTALLED_APPS = [
 
     'authentication',
     'chat',
+
+    #'storages',
 ]
 
 
@@ -121,9 +115,21 @@ USE_I18N = True
 
 USE_TZ = True
 
+#AWS CONFIGURATIONS
+# DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
+# STATICFILES_STORAGE = "storages.backends.s3.S3Storage"
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
+AWS_ACCESS_KEY_ID = 'AKIA5U6V7VS5OTPB6VVY'
+AWS_SECRET_ACCESS_KEY = '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'
+
+# AWS_STORAGE_BUCKET_NAME = 'elasticbeanstalk-ap-south-1-938362252474'
+# AWS_S3_FILE_OVERWRITE = False
+# AWS_DEFAULT_ACL = None
+# AWS_S3_REGION_NAME = 'ap-south-1'
+
+# AWS_S3_ADDRESSING_STYLE = "virtual"
+
+
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
@@ -138,3 +144,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'Media')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'teammghproduction@gmail.com'
+EMAIL_HOST_PASSWORD = 'bgds wukv vfkz vsqz'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False

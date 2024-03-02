@@ -133,7 +133,11 @@ html
 {
     opacity: 0.7;
 }
-
+.timestamp
+{
+    font-size: 1em;
+    font-family: 'Monteserrat_Lig';
+}
 .mainsec
 {
     width: 100%;
@@ -177,7 +181,7 @@ html
     gap: 8em;
     border-radius: 10px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    width: 550px;
+    width: 700px;
 }
 .roomname
 {
@@ -237,6 +241,14 @@ html
 {
     width: 50%;
 }
+.link
+{
+    font-size: 1.4em;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 2em;
+    font-family: "Monteserrat_Reg";
+}
 .room-wrap
 {
     display: flex;
@@ -256,7 +268,7 @@ html
     top: 0;
     right: -550px;
     width: 530px;
-    min-height: 100vh;
+    height: 100vh;
     background: #2F2F2F;
     display: flex;
     flex-direction: column;
@@ -282,6 +294,13 @@ html
     font-family: 'Monteserrat_Sbold';
     text-decoration: underline;
 }
+.hr
+{
+    width: 100%;
+    height: 1px;
+    background: #6c6c6c;
+    margin-top: 2em;
+}
 .chatwrap
 {
     overflow-y: scroll;
@@ -300,7 +319,7 @@ html
 }
 .chatinput
 {
-    position: absolute;
+    position: fixed;
     bottom: 2em;
     /* right: 50%;
     left: 50%; */
@@ -311,7 +330,7 @@ html
 }
 .chatint
 {
-    width: 90%;
+    width: 37%;
     background: #292929;
     border-radius: .3em;
     display: flex;
@@ -353,6 +372,10 @@ html
     flex-direction: column;
     gap: 1em;
 }
+.roombtn>a
+{
+    font-size: 2em;
+}
 .swal2-title
 {
     font-family: 'Monteserrat_Sbold';
@@ -378,11 +401,48 @@ html
     font-size: 1.6em;
     font-family: 'Monteserrat_Reg';
 }
+/* Animations */
+.herosaly
+{
+    opacity: 0;
+}
+.header1
+{
+    transform: translateX(500px);
+    opacity: 0;
+}
+.fileup
+{
+    opacity: 0.5;
+    cursor: pointer;
+}
+/* Utilities */
+.flex
+{
+    display: flex;
+}
+.bg
+{
+    background-color: #373737;
+    border-radius: 5px;
+    padding: 1em;
+}
+.flex-col
+{
+    flex-direction: column;
+}
+.align-right
+{
+    align-items: flex-end;
+}
 @media (max-width: 840px)
 {
+    .rooms{
+        width: 100%;
+    }
     .roombox
     {
-        width: 300px;
+        width: 100%;
     }
 }
 @media (max-width: 650px)
@@ -418,5 +478,9 @@ html
     .nlogo
     {
         display: none;
+    }
+    .chatint
+    {
+        width: 90%;
     }
 }

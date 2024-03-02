@@ -1,0 +1,99 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetaChat</title>
+    <link rel="stylesheet" href="{% static 'Chat/Assets/css/main.css'%}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Judson&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.css" integrity="sha512-NXUhxhkDgZYOMjaIgd89zF2w51Mub53Ru3zCNp5LTlEzMbNNAjTjDbpURYGS5Mop2cU4b7re1nOIucsVlrx9fA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'Chat/Assets/css/main.css'%}">
+    <link rel="stylesheet" href="{% static 'Chat/Assets/css/sharefiles.css'%}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1540.0/aws-sdk.min.js" integrity="sha512-Z44KTH9JEwHbals6/XBnOt50XsZNFQfRgu9egf8Zk4w229D4JwAfOXuFGAyCTqoIpdWKVgL1rGTySaTCuLOY6w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <style>
+        .imagewrap {
+        background: url("{%static 'Chat/Assets/images/profile.jpeg'%}");
+        background-size: cover;
+        background-position: center;
+        border-radius:50% 50% 50% 50%;
+        width:100px;
+        height:100px;
+    }
+    </style>
+</head>
+
+<body>
+  <section class="parent">
+    {% include 'pages/NavBar.html' %}
+   
+    <div class="mainsec">
+        <a href="{%url 'profile'%}">
+        <div class="profilediv">
+            <div class="imagewrap">
+                
+            </div>
+            <div class="prcont">
+                <p class="info">Logged in as</p>
+                <p class="User">{{request.user}}</p>
+            </div>
+        </div>
+        </a>
+        <div class="rooms">
+            <div class="sfrheader">
+                <div>
+                    <p class="sfrmh"><span>Share Files</span>    Powered by MGCloud</p>
+                    <p class="sfrroom">Test Room</p>
+                    <p class="sfrroomid">892-129-029-102</p>
+                </div>
+                <div>
+                    <form method="POST" class="form" enctype="multipart/form-data">
+                        {%csrf_token%}
+                        <button class="upbtn">
+                            <img src="{% static 'Chat/Assets/images/upload.svg' %}" class="fileup">
+                            <!-- <label for="fir">Upload file</label> -->
+                            <input type="file" name="file" id="fir" class="fileupdate">
+                            <!-- <input type="submit" value="proceed"> -->
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="room-wrap">
+                <div class="filecontainer">
+                        {% for file in data %}
+                        <div class="filecard">
+                            <div class="leftcont">
+                                <div class="img">
+                                    <img src="{% static 'Chat/Assets/images/document.svg' %}" class="fileup">
+                                </div>
+                                <div class="filedetails">
+                                    <p class="fmh">{{file.file_name}}</p>
+                                    <p class="fsr">Shared by: {{ file.user_sent.get_queryset.0 }}</p>
+                                </div>
+                            </div>
+                            <div class="rightcont">
+                                <div class="roombtn">
+                                    <button class="joinbtn">Open</button>
+                                    <button class="joinbtn">Download</button>  
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+
+  <script>
+    document.querySelector('.fileupdate').onchange =()=>{
+        document.querySelector('.form').submit()
+    }
+  </script>
+</body>
+</html>

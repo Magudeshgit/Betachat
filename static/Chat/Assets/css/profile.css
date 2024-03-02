@@ -17,6 +17,19 @@ body
 .profilepicdiv
 {
     margin-top: 2em;
+    display: flex;
+    align-items: center;
+    gap: 2em;
+}
+.profilecontent>p
+{
+    font-size: 2.4em;
+    font-family: "Monteserrat_Med";
+}
+.proemail
+{
+    font-size: 1.6em !important;
+    font-family: "Monteserrat_Reg" !important;
 }
 form
 {
@@ -30,6 +43,30 @@ label
     margin-top: 1em;
     font-family: 'Monteserrat_Reg';
     font-size: 1.6em;
+}
+.langwrap>label
+{
+    font-size: 2em;
+    font-family: "Monteserrat_Reg";
+}
+.langwrap>select
+{
+    margin-top: 1em;
+    outline: none;
+    background-color: transparent;
+    border: 2px solid white;
+    padding: 1em 1em;
+    border-radius: 10px;
+    width: 400px;
+    font-size: 1.6em;
+    font-family: "Monteserrat_Reg";
+}
+.langwrap>select>option, .disops
+{
+    background: white;
+    color: black;
+    font-size: 1em;
+    font-family: "Monteserrat_Reg";
 }
 form>input
 {

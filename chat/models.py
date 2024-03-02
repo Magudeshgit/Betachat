@@ -1,7 +1,7 @@
 from django.db import models
 from authentication.models import BetaUser
+from django.utils import timezone
 
-# Create your models here.
 
 
 class ChatBase(models.Model):
@@ -15,3 +15,23 @@ class ChatBase(models.Model):
 
     def __str__(self):
         return self.group_name
+    
+class ChatMessages(models.Model):
+    chat_group = models.ManyToManyField(ChatBase)
+    user = models.ManyToManyField(BetaUser)
+    content = models.TextField()
+    timestamp = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return str(self.timestamp) 
+    
+# MGCloud Integrations
+class MGCloudIndex(models.Model):
+    chat_room = models.ForeignKey(ChatBase, on_delete=models.CASCADE)
+    file_name = models.CharField(max_length=100 )
+    user_sent = models.ManyToManyField(BetaUser)
+    timestamp = models.DateTimeField(default=timezone.now)
+    MGCID = models.IntegerField()
+
+    def __str__(self):
+        return str(self.file_name)

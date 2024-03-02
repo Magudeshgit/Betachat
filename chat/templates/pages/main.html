@@ -12,8 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.css" integrity="sha512-NXUhxhkDgZYOMjaIgd89zF2w51Mub53Ru3zCNp5LTlEzMbNNAjTjDbpURYGS5Mop2cU4b7re1nOIucsVlrx9fA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{% static 'Chat/Assets/css/main.css'%}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js" integrity="sha512-lOrm9FgT1LKOJRUXF3tp6QaMorJftUjowOWiDcG5GFZ/q7ukof19V0HKx/GWzXCdt9zYju3/KhBNdCLzK8b90Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1540.0/aws-sdk.min.js" integrity="sha512-Z44KTH9JEwHbals6/XBnOt50XsZNFQfRgu9egf8Zk4w229D4JwAfOXuFGAyCTqoIpdWKVgL1rGTySaTCuLOY6w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <style>
         .imagewrap {
@@ -45,7 +44,7 @@
         </a>
         <div class="rooms">
             <div class="header">
-                <p>Your Rooms</p>
+                <p>Your Chats</p>
             </div>
             <div class="room-wrap">
                 {%if not data%}
@@ -56,12 +55,12 @@
                 {% for room in data%}
                 <div class="roombox rbx">
                     <div class="roomcont">
-                        <p class="roomname">{{room.group_name}}
-                            
-                        </p>
+                        <p class="roomname">{{room.group_name}}</p>
                         <p class="uid">{{room.unique_id}} <img class="copybtn" src="{% static 'Chat/Assets/images/copy.svg' %}"></p>
+                        <!-- <a onclick="navigator.clipboard.writeText(this.innerHTML)" class="link">Copy link <img class="copybtn" src="{% static 'Chat/Assets/images/copy.svg' %}"></a> -->
                         <p class="desc">{{room.group_description}}</p>   
                         <p class="roomkeyword" style="display: none;">{{room.keyword}}</p>
+                        <p style="display: none;" class="roomdbid">{{room.id}}</p>
                         <span class="admclass">
                             {% if room.group_admin == request.user %}
                                 Admin
@@ -73,13 +72,16 @@
                     <div class="roombtn">
                         <button class="joinbtn">Join</button>
                         {% if room.group_admin == request.user %}
-                        <button class="joinbtn" ><a href="{%url 'configure' room.id%}" style="text-decoration: none; font-size: .9em; width: 100%;">Configure</a></button>            
-                        <button class="delbtn">
+                        <button class="joinbtn" ><a href="{%url 'configure' room.id%}" style="text-decoration: none; font-size: .9em; width: 100%;">Configure</a></button>
                         {%endif%}
                             {% if room.group_admin == request.user %}
+                                <button class="delbtn">
                                 <a href="{%url 'Delete' room.id%}">Delete</a>
+                                </button>
                             {% else %}
+                                <button class="delbtn">
                                 <a href="{%url 'Remove' room.id%}">Remove</a>
+                                </button>
                             {% endif %}
                         </button>
                     </div>
@@ -94,7 +96,8 @@
             <p class="roomhead"></p>
             <p class="room_id"></p>
             <p class="room_desc"></p>
-            <hr>
+            <a onclick="CopyUID()" class="link">Copy link <img class="copybtn" src="{% static 'Chat/Assets/images/copy.svg' %}"></a>
+            <div class="hr"></div>
         </div>
         <div class="chatwrap">
             
@@ -105,6 +108,7 @@
             <div class="chatint">
                 <img src="{% static 'Chat/Assets/images/send.svg' %}" alt="">
                 <input type="text" name="msg" placeholder="Send a Message">
+                <a href="" class="fileuplink"><img src="{% static 'Chat/Assets/images/upload.svg' %}" class="fileup"></a>
             </div>
             </form>
         </div>
@@ -113,6 +117,7 @@
         </div>
     </div>
   </section>
+  <!-- <script src="{% static 'Chat/js/chat.js' %}"></script> -->
   <script src="{% static 'Chat/js/main.js' %}"></script>
   <script>
      window.onload = ()=>{
@@ -123,6 +128,9 @@
     }
 
     window.username = '{{request.user}}'
+    window.language_preference = '{{request.user.language_preference}}'
+
+    let objDiv = document.querySelector(".chatwrap");
     copy = document.querySelector('.copybtn')
     copy.addEventListener('click',(e)=>{
         UID = e.target.parentNode.innerHTML.slice(0,11)
@@ -144,8 +152,39 @@
             title: 'Copied to clipboard!'
             })
     })
+
+    function CopyUID() {
+        //To be replaced by location.hostname in production
+        // console.log()
+        navigator.clipboard.writeText('http://127.0.0.1:8000/joinchat/'+window.UniqueID)
+        const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+            icon: 'success',
+            title: 'Copied to clipboard!' 
+            })
+    }
+
+    function scroll_bottom(){
+        objDiv.scrollTo(0,objDiv.scrollHeight)
+    }
+
     function Profanity_Filter(msg){
         STATE=false
+        if(keyword===''){
+            console.log('empty')
+            return false
+        }
         keywordArray = JSON.parse(keyword)
         for (let i=0; i<keywordArray.length; i++) {
             const element = keywordArray[i];
@@ -173,17 +212,17 @@
     }
     function SendProtocol(e) {
     e.preventDefault()
-    message = e.target.msg.value
-    console.log(window.user)
+    message = e.target.msg.value    
     if (Profanity_Filter(message)===false)
     {
-        encrypted_message=AES_Encryptor(message)
-        WSINS.send(JSON.stringify(
-        {
-            'USER' : username,
-            'MESSAGE' : encrypted_message
-        }
-    ))
+        encrypted_message=AWS_Encryptor(message).then((data)=>{
+            WSINS.send(JSON.stringify(
+            {
+                'USER' : username,
+                'MESSAGE' : data
+            }
+        ))
+        })
     }
     
     FORM.reset()

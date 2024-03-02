@@ -17,21 +17,32 @@
         <div class="heading">
             <p>Profile</p>
         </div>
+
         <div class="profilepicdiv">
             <div class="profilepic">
                 <img src="{% static 'Chat/Assets/images/profile.jpeg' %}" alt="profile">
             </div>
+            <div class="profilecontent">
+                <p>{{request.user}}</p>
+                <p class="proemail">{{request.user.email}}</p>
+                
+            </div>
         </div>
-        <form method="POST">
-            {%csrf_token%}
-            <label for="pruser">Username</label>
-            <input type="text" class="pruser" id="pruser" readonly>
-            <label for="prnote">Note</label>
-            <input type="text" name="note" class="prnote" id="prnote">
-            <label for="premail" id="premail">Email</label>
-            <input type="text" name="email" class="premail" id="premail">
-            <input type="submit">
-        </form>
+        <div class="configurations">
+            <form class="langwrap" method="POST">
+                {%csrf_token%}
+                <label for="lang">Language Preference:</label>
+                <select name="language" id="lang">
+                    <option disabled selected class="disops">Selet a language, Default: English</option>
+                    {%for language in languages%}
+                        <option value="{{language.0}}">{{ language.1 }}</option>
+                    {%endfor%}
+                </select>
+                <input type="submit" value="Submit">
+
+            </form>
+        </div>
+
         </div>
     </div>
     <script>

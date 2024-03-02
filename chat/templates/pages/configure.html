@@ -12,15 +12,15 @@
         {%include 'pages/NavBar.html'%}
             <div class="rightside">
                 <div class="heading">
-                    <p>Configure Room</p>
+                    <p>Configure Chat</p>
                 </div>
                 <div class="roomheader">
                     <p class="rname">{{data.group_name}}</p>
                     <p class="countppl">{{count}} people are around</p>
                 </div>
                 <div class="userwrapbox">
-                <div class="userwrap">
                     {%for Users in rmusr%}
+                <div class="userwrap">
                     <div class="usertab">
                         <p>{{Users}}</p>
                     </div>
@@ -29,8 +29,8 @@
                         <img src="{%static 'Chat/Assets/images/rm.svg'%}" alt="remove">
                     </div>
                     </a>
-                    {%endfor%}
                 </div>
+                {%endfor%}
                 </div>
                 <div class="roomheader">
                     <p class="rname2">Profanity Filter</p>
