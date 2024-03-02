@@ -119,8 +119,8 @@ USE_TZ = True
 # DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
 # STATICFILES_STORAGE = "storages.backends.s3.S3Storage"
 
-AWS_ACCESS_KEY_ID = 'AKIA5U6V7VS5OTPB6VVY'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
 
 # AWS_STORAGE_BUCKET_NAME = 'elasticbeanstalk-ap-south-1-938362252474'
 # AWS_S3_FILE_OVERWRITE = False
@@ -149,7 +149,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'teammghproduction@gmail.com'
-EMAIL_HOST_PASSWORD = 'bgds wukv vfkz vsqz'
+EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
