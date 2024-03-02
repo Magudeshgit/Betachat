@@ -24,5 +24,11 @@ urlpatterns = [
     path('configure/<int:roomid>', chat.Group_config, name='configure'),
     path('remove_user/<int:roomid>', chat.Remove_User, name='remove_user'),
     path('remove_keyword/<str:rm_keyword>/<int:roomid>', chat.Remove_Keyword, name='remove_keyword'),
+    
+    path('sharefiles/<int:roomid>', chat.shareFiles, name='sharefiles'),
+
+    # API & Joining Links
+    path('getmessages/<str:roomid>', chat.Message_Data),
+    path('joinchat/<str:roomid>', chat.joinChatLink)
 
 ]

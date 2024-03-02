@@ -2,8 +2,23 @@ from django.shortcuts import render, redirect
 from .forms import MakeUser, LogUser
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
+from django.core.mail import send_mail
+from django.conf import settings
+import boto3 as boto
+
 
 def Home(request):
+    if request.method=='POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        content = request.POST.get('content')
+        email = send_mail(
+        "BetaChat Feedback Form",
+        content,
+        settings.EMAIL_HOST_USER,
+        ['magudesh2006@gmail.com'],
+        fail_silently=False,
+    ) 
     return render(request, 'authpages/index.html')
 
 def Signin(request):
@@ -17,8 +32,8 @@ def Signin(request):
             return redirect('/')
         else:
            print('error')
-           return render(request, 'authpages/SignIn.html', {'error':'Your Username or password is incorrect'})
-    return render(request, 'authpages/SignIn.html')
+           return render(request, 'authpages/Signin.html', {'error':'Your Username or password is incorrect'})
+    return render(request, 'authpages/Signin.html')
 
 def Signup(request):
     object = MakeUser()

@@ -26,6 +26,7 @@ class BetaUser(AbstractBaseUser, PermissionsMixin):
     Note=models.CharField(max_length=50,blank=True)
     username = models.CharField(max_length=50, unique=True)
     email = models.EmailField(verbose_name='Email', max_length=255)
+    language_preference = models.CharField(verbose_name='Language Preference', max_length=5, default="en")
     is_staff=models.BooleanField(default=False)
     is_active=models.BooleanField(default=True)
     is_superuser=models.BooleanField(default=False)

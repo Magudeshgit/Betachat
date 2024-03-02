@@ -1,14 +1,23 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
+from django.conf.global_settings import LANGUAGES
 from django.db.models import Count
+from django.http import JsonResponse, HttpResponse
 from authentication.models import BetaUser
-from .models import ChatBase
+from .models import ChatBase, ChatMessages, MGCloudIndex
 import random
 import json
+import requests as r
 
 jsonDecode=json.decoder.JSONDecoder()
 
+#23
+#MGCloud Integrations
+MGCFILES = 'http://mgcloudapi.pythonanywhere.com/cloud/'
+
+
+#Source Code
 @login_required(login_url='Home/')
 def Home(request):
     try: 
@@ -73,6 +82,8 @@ def CreateRoom(request):
                 group_PIN=pin2
             )
             room.Users.set([request.user.id])
+            
+
             print('room in db created')
             return redirect('/')
     return render(request, 'pages/createroom.html')
@@ -83,25 +94,19 @@ def RemoveRoom(request, roomid):
     return redirect('/')
     
 def DeleteRoom(request, roomid):
-    item = ChatBase.objects.get(id=roomid).delete()
+    ChatBase.objects.get(id=roomid).delete()
     return redirect('/')
 def Profile(request):
-    print(request.user.profile.path)
     userData=[]
     userData.append(request.user.email)
     userData.append(request.user.Note)
     if request.method=='POST':
-        formData=[]
-        note=formData.append(request.POST.get('note'))
-        email=formData.append(request.POST.get('email'))
-        if userData!=formData:
-            userObject = BetaUser.objects.filter(username=request.user)
-            userObject.update(Note=request.POST.get('note'))
-            userObject.update(email=request.POST.get('email'))
-            
-            return render(request,'pages/profile.html')
+        language=request.POST.get('language')
+        userObject = BetaUser.objects.filter(username=request.user)
+        userObject.update(language_preference=language)
+        return render(request,'pages/profile.html', {'languages': LANGUAGES})
     else:
-        return render(request,'pages/profile.html')
+        return render(request,'pages/profile.html', {'languages': LANGUAGES})
 def Group_config(request,roomid):
     keywords = ChatBase.objects.get(id=roomid)
     lop = keywords.keyword
@@ -141,3 +146,64 @@ def Remove_Keyword(request,rm_keyword,roomid):
     data.keyword = json.dumps(keywordList)
     data.save()
     return render(request,'pages/configure.html', {'data':data, 'count':count,'rmusr':data.Users.all(), 'keywords':keywordList})
+
+def Message_Data(request, roomid):
+    chat = ChatBase.objects.get(unique_id=roomid)
+    chatBlob = []
+    messages = ChatMessages.objects.filter(chat_group=chat.id)
+    for message in messages:
+        chatBlob.append({
+            'user': message.user.get_queryset()[0].username, 
+            'content': message.content,
+            'timestamp': str(message.timestamp)
+            })
+
+    #msg_json = serializers.serialize('json', chatBlob)
+    return HttpResponse(json.dumps(chatBlob), content_type='application/json') 
+
+@login_required(login_url='/Home')
+def joinChatLink(request, roomid):
+    try:
+        chatobj = ChatBase.objects.get(unique_id=roomid)
+        roomid = chatobj.id
+    except ObjectDoesNotExist:
+        return render(request, 'pages/notfound.html')
+    return redirect('/join/'+str(roomid))
+
+def shareFiles(request, roomid):
+    try: 
+        data=MGCloudIndex.objects.filter(chat_room=roomid)
+    except ObjectDoesNotExist:
+        data=None
+    if request.method == 'POST':
+        file = request.FILES.get('file')
+        send = r.post(MGCFILES,data={'foreign_key': 23},files={'file':file})
+        response = json.loads(send.text)
+    
+        Store_File = MGCloudIndex.objects.create(
+            chat_room = ChatBase.objects.get(id=roomid),
+            file_name = str(file),
+            MGCID = response.get('id')
+        )
+
+        Store_File.user_sent.set([request.user.id])
+        Store_File.save()
+
+        return render(request, 'pages/sharefile.html', {'data': data})
+            #    if send.status_code==200:
+
+            #         print("File Uploaded Succesfully ", send.text)
+            #         self.LB.insert(1,filename)
+            #         self.__Files()
+    return render(request, 'pages/sharefile.html', {'data': data})
+
+
+
+
+
+# send = requests.post(up_api,data={'foreign_key':self.ForeignKey},files={'file':file})
+#                if send.status_code==200:
+#                     messagebox.showinfo('Upload Success!!','File Uploaded to MGCloud')
+#                     print("File Uploaded Succesfully ", send.text)
+#                     self.LB.insert(1,filename)
+#                     self.__Files()

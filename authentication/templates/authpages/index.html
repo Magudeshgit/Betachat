@@ -9,9 +9,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Judson&family=Krona+One&family=Montez&family=Notable&display=swap" rel="stylesheet">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+
     <link rel="stylesheet" href="{%static 'Auth/css/main.css'%}">
 </head>
-<body>
+<body onload="animations()">
     <div class="parent">
         <section class="sec1">
             <div class="navsec">
@@ -29,14 +32,14 @@
                     <img class="cmob" src="{%static 'Auth/Assets/images/curve.svg'%}" alt="#">
                 </div>
                 <div class="mainl">
-                    <div class="header">
+                    <div class="header header1" style="transform: translateX(-500px); opacity: 0;">
                         <p class="logohead">BetaChat</p>
                         <p class="sechead">Connecting Worlds,
                             with texts.</p>
                         <p class="terthead">In a private and secure way.</p>
                         <a href="/Signup"><button>Signup Now!</button></a>    
                     </div>
-                    <div class="herosaly">
+                    <div class="herosaly" style="opacity: 0;">
                         <img src="{%static 'Auth/Assets/images/hero.svg'%}" alt="#">
                     </div>
                 </div>
@@ -47,7 +50,7 @@
             </div>
         </section>
         <section class="sec2">
-            <div class="features">
+            <div class="features"  style="transform: translateX(-300px); opacity: 1;">
                 <div class="headerfeat">
                     <p>Features</p>
                 </div>
@@ -80,7 +83,7 @@
                     </div>
                 </div>
             </div>
-            <div class="abstract">
+            <div class="abstract" style="transform: translateX(800px); opacity: 1;">
                 <img src="{%static 'Auth/Assets/images/feat.svg'%}" alt="">
             </div>
         </section>
@@ -119,5 +122,45 @@
 
         </section>
     </div>
+    </script>
+    <script>
+        function animations()
+        {
+        gsap.registerPlugin(ScrollTrigger)
+         gsap.to(".herosaly", {
+            scrollTrigger: ".herosaly", // start animation when ".box" enters the viewport
+            x: 50,
+            y: -20,
+            opacity: 1,
+            duration: 2,
+            ease: "power3.out",
+            });
+
+        gsap.to(".header1", {
+            scrollTrigger: ".header1", // start animation when ".box" enters the viewport
+            x: 1,
+            duration: 1.5,
+            ease: "power3.out",
+            opacity: 1,
+            });
+        
+        gsap.to(".features",
+        {
+            scrollTrigger: ".sec2",
+            x: 1,
+            ease: "power3.out",
+            opacity: 1,
+            start: "top bottom"
+        })
+        gsap.to(".abstract",
+        {
+            scrollTrigger: ".sec2",
+            x: -1,
+            ease: "power3.out",
+            opacity: 1,
+            start: "+=1000"
+        })
+    }
+    </script>
 </body>
 </html>
